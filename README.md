@@ -1,5 +1,6 @@
 # mixin_robot
 本文主要基于mixin实现-如何创建机器人，如何让机器人回复用户，如何让用户授权，如何让机器人按时发消息等等
+
 参考来源：
  官方开发者文档：https://developers.mixin.one/document/bot/get-started/websocket
  GitHub开源项目：https://github.com/wenewzhang/mixin_labs-python-bot
