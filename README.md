@@ -1,6 +1,5 @@
 # mixin_robot
 本文主要基于mixin实现-如何创建机器人，如何让机器人回复用户，如何让用户授权，如何让机器人按时发消息等等
-
 参考来源：
  官方开发者文档：https://developers.mixin.one/document/bot/get-started/websocket
  GitHub开源项目：https://github.com/wenewzhang/mixin_labs-python-bot
@@ -8,13 +7,14 @@
  
 实现环境：
  python3.6
+ 
 源码目录：
  mixin_config.py (配置机器人参数,在配置机器人之前你得先去mixin开发者后台申请机器人,详情可以参考我上边给的简书教程.)
                  (注：机器人申请其它都可以乱写但是,验证网址一定要写好,你可以写你的服务器的IP上去,因为这里在用户授权的时候需要用到!)
  mixin_api.py (写的是一些常规方法,具体可以看我的源码)
  mixin_ws_api.py (这里就是重头戏了,这个文件写的是机器人调用的方法,这里我完全按着GitHub开源老哥的来,但是我加了一些自己的东西)
  ws_test.py (运行项目~)
-
+ 
 实现思路：
 这里涉及太多东西，我就挑一些比较重要的来说。
  1，如何让机器人回复用户
@@ -26,8 +26,7 @@
     btns = [{"label":"订阅","action":"input:订阅","color":"#0084ff"},{"label":"取消订阅","action":"input:取消订阅","color":"#FF8000"}]
     MIXIN_WS_API.sendAppButtonGroup(ws, conversationId, userId, btns)
     return
-  这里还有一个按钮方法，具体可以查看我的mixin_ws_api.py源码 
-  
+  这里还有一个按钮方法，具体可以查看我的mixin_ws_api.py源码   
  2,如何实现定时发送消息功能
   这里就变成了如何主动给用户发信息的问题了，首先我们要知道要给用户发消息需要些什么，根据官方的开发者文档，在我们给机器人发送消息的时候后台会返回 会话ID和用户ID，我们只需要把用户ID和会话ID存起来在定时发送消息的时候读取在发送就好了，比如：
   now_hour = time.strftime("%H", time.localtime()) #获取时间  比如：08：00  这步获取的是 08
