@@ -21,7 +21,7 @@
 
  python3.6
  
- sqlite3 数据库 用于存取userID 和会话ID
+ sqlite3 数据库 用于存取userID 和会话ID   在使用之前记得先创建数据库
  
 源码目录：
 
