@@ -78,14 +78,6 @@ def on_message(ws, message):
                 MIXIN_WS_API.sendAppButtonGroup(ws, conversationId, userId, btns)
                 return
 
-            if 'sign in' ==realData:
-                print('yes~')
-                introductionContent = 'see you~'
-                MIXIN_WS_API.sendUserText(ws, conversationId, userId, introductionContent)
-                cur.execute("update test set flag=1 where user_id=?",(userId,))
-                con.commit()
-                return
-
             if '订阅' == realData:
                 print('调用方法')
                 demo = (str(userId))
