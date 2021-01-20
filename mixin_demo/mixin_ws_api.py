@@ -78,7 +78,7 @@ class MIXIN_WS_API:
             ws.send(fgz.getvalue(), opcode=websocket.ABNF.OPCODE_BINARY)
             while True:
                 time.sleep(1)
-        # 每日八点定时发送，这里定义一个flag 判断用户是否斗地主了
+        # 每日八点定时发送，这里定义一个flag 判断用户是否斗地主了   ，这里你可以自己在ws_test.py里边加一个update flag的方法用来实现每隔一个小时提醒一次的功能
         def jobday():
             while True:
                 now_hour = time.strftime("%H", time.localtime())
