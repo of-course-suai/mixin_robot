@@ -17,9 +17,7 @@ pay_session_id = ''
 pin_token = ""
 
 
-private_key =  """-----BEGIN RSA PRIVATE KEY-----
-
------END RSA PRIVATE KEY-----"""
+private_key =  """？"""
 
 
 
