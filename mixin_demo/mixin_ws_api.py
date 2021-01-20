@@ -109,26 +109,9 @@ class MIXIN_WS_API:
                     time.sleep(3600*23)
                 time.sleep(1)
 
-
-        def jobhour():
-            while True:
-                now_hour = time.strftime("%H", time.localtime())
-                now_min = time.strftime("%M", time.localtime())
-                con = sqlite3.connect("subscribe.db")
-                cur = con.cursor()
-                if int(now_hour)>8 and now_min=='00':
-                    userids = cur.execute("select user_id,conversation_id from Test where flag=0").fetchall()
-                    for u in userids:
-                        a = '你并不是无能，你只是没有选择的权力。所以来把斗地主？'
-                        MIXIN_WS_API.sendUserText(ws, u[1], u[0], a)
-                        btns = [{"label": "冲冲冲", "action": "https://qqgame.qq.com/game/105.shtml", "color": "#FF8000"}]
-                        MIXIN_WS_API.sendAppButtonGroup(ws, u[1], u[0], btns)
-                        time.sleep(3600)
-                    time.sleep(1)
-
         thread.start_new_thread(run, ())
         thread.start_new_thread(jobday, ())
-        thread.start_new_thread(jobhour, ())
+#         thread.start_new_thread(jobhour, ())
         thread.start_new_thread(updateflag, ())
         now_hour = time.strftime("%H", time.localtime())
 
