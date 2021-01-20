@@ -85,10 +85,9 @@ def on_message(ws, message):
                 if len(squrl)==0:
                     introductionContent = '在使用订阅前得先授权嗷，请点击下方按钮进行授权'
                     MIXIN_WS_API.sendUserText(ws, conversationId, userId, introductionContent)
-                    MIXIN_WS_API.sendUserAppButton(ws, conversationId, userId, "https://mixin-www.zeromesh.net/oauth/authorize?client_id=959f944f-603f-437c-a566-9acc1c0e070e&scope=PROFILE:READ+PHONE:READ+CONTACTS:READ+ASSETS:READ+SNAPSHOTS:READ&response_type=code&return_to=http://122.9.51.227:8888/auth", "点击授权")
+                    MIXIN_WS_API.sendUserAppButton(ws, conversationId, userId, "https://mixin-www.zeromesh.net/oauth/authorize?client_id=''''?''''&scope=PROFILE:READ+PHONE:READ+CONTACTS:READ+ASSETS:READ+SNAPSHOTS:READ&response_type=code&return_to='机器人验证地址'", "点击授权")
                 else:
 
-                    # luck btc
                     introductionContent = '订阅成功,现在你可以斗地主了'
                     MIXIN_WS_API.sendUserText(ws, conversationId, userId, introductionContent)
                     btns = [{"label": "一键直达签到", "action": "https://qqgame.qq.com/game/105.shtml", "color": "#FF8000"}]
