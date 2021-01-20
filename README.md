@@ -44,17 +44,14 @@
   
   当用户发送你好这两个关键字的时候我们就会发送下列文字
   
-  if '你好' == realData:
   
-    introductionContent = '欢迎使用卢本伟智能小助手~'
-    
-    MIXIN_WS_API.sendUserText(ws, conversationId, userId, introductionContent)
-    
-    btns = [{"label":"订阅","action":"input:订阅","color":"#0084ff"},{"label":"取消订阅","action":"input:取消订阅","color":"#FF8000"}]  #按钮方法
-    
-    MIXIN_WS_API.sendAppButtonGroup(ws, conversationId, userId, btns)
-    
+    if '你好' == realData: 
+     introductionContent = '欢迎使用卢本伟智能小助手~' 
+     MIXIN_WS_API.sendUserText(ws, conversationId, userId, introductionContent)
+     btns = [{"label":"订阅","action":"input:订阅","color":"#0084ff"},{"label":"取消订阅","action":"input:取消订阅","color":"#FF8000"}]  #按钮方法
+     MIXIN_WS_API.sendAppButtonGroup(ws, conversationId, userId, btns)
     return
+    
     
     
   这里还有一个按钮方法，具体可以查看我的mixin_ws_api.py源码   
@@ -63,25 +60,16 @@
  
   这里就变成了如何主动给用户发信息的问题了，首先我们要知道要给用户发消息需要些什么，根据官方的开发者文档，在我们给机器人发送消息的时候后台会返回 会话ID和用户ID，我们只需要把用户ID和会话ID存起来在定时发送消息的时候读取在发送就好了，比如：
   
-  now_hour = time.strftime("%H", time.localtime()) #获取时间  比如：08：00  这步获取的是 08
   
-  now_min = time.strftime("%M", time.localtime())  # 这步获取的是 00
-  
-  con = sqlite3.connect("subscribe.db")  #这里我用的是python自带的sqlite3数据库
-  
-  cur = con.cursor()
-  
-  if now_hour=='08' and now_min=='00':
-  
+    now_hour = time.strftime("%H", time.localtime()) #获取时间  比如：08：00  这步获取的是 08
+    now_min = time.strftime("%M", time.localtime())  # 这步获取的是 00
+    con = sqlite3.connect("subscribe.db")  #这里我用的是python自带的sqlite3数据库
+    cur = con.cursor()
+    if now_hour=='08' and now_min=='00':
       userids = cur.execute("select user_id,conversation_id from test where flag=0").fetchall()
-      
       for u in userids:
-      
           a = '斗地主时间到~'
-          
           MIXIN_WS_API.sendUserText(ws, u[1], u[0], a)
-          
       time.sleep(60)
-      
-  time.sleep(1)
+    time.sleep(1)
   
