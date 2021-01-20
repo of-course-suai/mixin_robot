@@ -18,11 +18,6 @@ except ImportError:
     import _thread as thread
 
 
-
-
-
-
-
 class MIXIN_WS_API:
 
     def __init__(self, on_message, on_open=None, on_error=None, on_close=None, on_data=None):
@@ -41,7 +36,7 @@ class MIXIN_WS_API:
 
         if on_data is None:
             on_data = MIXIN_WS_API.__on_data
-#   .decode()
+#   .decode()  如果你要放到服务器上边跑，你得把 header=["Authorization:Bearer " + encoded.decode()],的.decode()去掉
         websocket.enableTrace(True)
         self.ws = websocket.WebSocketApp("wss://blaze.mixin.one/",
                                     on_message=on_message,
@@ -83,45 +78,25 @@ class MIXIN_WS_API:
             ws.send(fgz.getvalue(), opcode=websocket.ABNF.OPCODE_BINARY)
             while True:
                 time.sleep(1)
+        # 每日八点定时发送，这里定义一个flag 判断用户是否斗地主了
         def jobday():
             while True:
                 now_hour = time.strftime("%H", time.localtime())
                 now_min = time.strftime("%M", time.localtime())
+                # sqlite3 数据库
                 con = sqlite3.connect("subscribe.db")
                 cur = con.cursor()
+                
                 if now_hour=='08' and now_min=='00':
                     userids = cur.execute("select user_id,conversation_id from test where flag=0").fetchall()
                     for u in userids:
-                        a = '签到时间到~ 签到完成后，记得点击已签到按钮哦，点击之后今天不再提醒~'
+                        a = '斗地主时间到'
                         MIXIN_WS_API.sendUserText(ws, u[1], u[0], a)
-                        MIXIN_WS_API.sendUserContactCard(ws, u[1], u[0], '71ae9403-9d20-4772-b47a-729e0cc3648b')
-                        btns = [{"label": "一键直达签到", "action": "https://bonus.mixin.zone/tasks", "color": "#FF8000"},
-                                {"label": "去答题", "action": "input:matter", "color": "#0084ff"},
-                                {"label": "已签到", "action": "input:sign in", "color": "#0084ff"}]
+                        btns = [{"label": "冲冲冲", "action": "https://qqgame.qq.com/game/105.shtml", "color": "#FF8000"}]
                         MIXIN_WS_API.sendAppButtonGroup(ws, u[1], u[0], btns)
                         time.sleep(60)
                     time.sleep(1)
-
-                if now_hour=='08' and now_min=='00':
-                    userids = cur.execute("select user_id,conversation_id from test where task_wall=0").fetchall()
-                    for u in userids:
-                        MIXIN_WS_API.sendUserContactCard(ws, u[1],  u[0], "e08207df-55de-4ad9-8463-af692824f988")
-                        btns = [{"label": "一键直达每日课堂", "action": "https://taskwall.mixin.zone/","color": "#FF8000"},
-                                {"label": "已学习", "action": "input:learn", "color": "#0084ff"}]
-                        MIXIN_WS_API.sendAppButtonGroup(ws, u[1], u[0], btns)
-                        time.sleep(60)
-                    time.sleep(1)
-
-                if now_hour == '08' and now_min == '00':
-                    userids = cur.execute("select user_id,conversation_id from test where shuilongtou=0").fetchall()
-                    for u in userids:
-                        MIXIN_WS_API.sendUserContactCard(ws, u[1], u[0], "1da1124a-9c97-4f2b-b332-f11f77c7604a")
-                        btns = [{"label": "一键直达抽奖", "action": "https://app.exinearn.com/?isRobot=1#/discover", "color": "#FF8000"},
-                                {"label": "已抽奖", "action": "input:luck draw", "color": "#0084ff"}]
-                        MIXIN_WS_API.sendAppButtonGroup(ws, u[1], u[0], btns)
-                    time.sleep(60)
-                time.sleep(1)
-
+                  
         def updateflag():
             while True:
                 now_hour = time.strftime("%H", time.localtime())
@@ -130,8 +105,6 @@ class MIXIN_WS_API:
                 cur = con.cursor()
                 if now_hour=='00' and now_min=='00':
                     cur.execute("update test set flag=0 where 1=1")
-                    cur.execute("update test set task_wall=0 where 1=1")
-                    cur.execute("update test set shuilongtou=0 where 1=1")
                     con.commit()
                     time.sleep(3600*23)
                 time.sleep(1)
@@ -146,46 +119,18 @@ class MIXIN_WS_API:
                 if int(now_hour)>8 and now_min=='00':
                     userids = cur.execute("select user_id,conversation_id from Test where flag=0").fetchall()
                     for u in userids:
-                        a = '你今天还没有签到哦~ 赶紧点击下边的名片进行签到吧，签到完成记得点击已签到按钮,今日不在提醒哦~'
+                        a = '你并不是无能，你只是没有选择的权力。所以来把斗地主？'
                         MIXIN_WS_API.sendUserText(ws, u[1], u[0], a)
-                        MIXIN_WS_API.sendUserContactCard(ws, u[1], u[0], '71ae9403-9d20-4772-b47a-729e0cc3648b')
-                        btns = [{"label": "一键直达签到", "action": "https://bonus.mixin.zone/tasks", "color": "#FF8000"},
-                                {"label": "去答题", "action": "input:matter", "color": "#0084ff"},
-                                {"label": "已签到", "action": "input:ok", "color": "#0084ff"}]
+                        btns = [{"label": "冲冲冲", "action": "https://qqgame.qq.com/game/105.shtml", "color": "#FF8000"}]
                         MIXIN_WS_API.sendAppButtonGroup(ws, u[1], u[0], btns)
                         time.sleep(3600)
                     time.sleep(1)
-
-                if int(now_hour) > 8 and now_min == '00':
-                    userids = cur.execute("select user_id,conversation_id from Test where task_wall=0").fetchall()
-                    for u in userids:
-                        a = '你今天还没有学习哦~ 赶紧点击下边的名片进行学习吧，签到完成记得点击已学习按钮,今日不在提醒哦~'
-                        MIXIN_WS_API.sendUserText(ws, u[1], u[0], a)
-                        MIXIN_WS_API.sendUserContactCard(ws, u[1], u[0],"e08207df-55de-4ad9-8463-af692824f988")
-                        btns = [{"label": "一键直达每日课堂", "action": "https://app.exinearn.com/?isRobot=1#/discover","color": "#FF8000"},
-                                {"label": "已学习", "action": "input:ok", "color": "#0084ff"}]
-                        MIXIN_WS_API.sendAppButtonGroup(ws, u[1], u[0], btns)
-                        time.sleep(3600)
-                    time.sleep(1)
-
-                if int(now_hour) > 8 and now_min == '00':
-                    userids = cur.execute("select user_id,conversation_id from Test where shuilongtou=0").fetchall()
-                    for u in userids:
-                        a = '你今天还没有抽奖哦~ 赶紧点击下边的名片进行抽奖吧，签到完成记得点击已抽奖按钮,今日不在提醒哦~'
-                        MIXIN_WS_API.sendUserText(ws, u[1], u[0], a)
-                        MIXIN_WS_API.sendUserContactCard(ws, u[1], u[0],"1da1124a-9c97-4f2b-b332-f11f77c7604a")
-                        btns = [{"label": "一键直达抽奖", "action": "https://taskwall.mixin.zone/", "color": "#FF8000"},
-                                {"label": "已抽奖", "action": "input:ok", "color": "#0084ff"}]
-                        MIXIN_WS_API.sendAppButtonGroup(ws, u[1], u[0], btns)
-                    time.sleep(3600)
-                time.sleep(1)
 
         thread.start_new_thread(run, ())
         thread.start_new_thread(jobday, ())
         thread.start_new_thread(jobhour, ())
         thread.start_new_thread(updateflag, ())
         now_hour = time.strftime("%H", time.localtime())
-        print(int(now_hour))
 
     """
     on_data default
