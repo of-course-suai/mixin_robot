@@ -21,6 +21,8 @@
 
  python3.6
  
+ sqlite3 数据库 用于存取userID 和会话ID
+ 
 源码目录：
 
  mixin_config.py (配置机器人参数,在配置机器人之前你得先去mixin开发者后台申请机器人,详情可以参考我上边给的简书教程.)
