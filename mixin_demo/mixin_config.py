@@ -2,8 +2,6 @@
 """
 Mixin Config
 get below config from 'https://developers.mixin.one/dashboard'
-code by lee.c
-update at 2018.12.2
 """
 # 这里是你的机器人参数
 
