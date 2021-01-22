@@ -97,17 +97,17 @@ class MIXIN_WS_API:
                         time.sleep(60)
                     time.sleep(1)
                   
-        def updateflag():
-            while True:
-                now_hour = time.strftime("%H", time.localtime())
-                now_min = time.strftime("%M", time.localtime())
-                con = sqlite3.connect("subscribe.db")
-                cur = con.cursor()
-                if now_hour=='00' and now_min=='00':
-                    cur.execute("update test set flag=0 where 1=1")
-                    con.commit()
-                    time.sleep(3600*23)
-                time.sleep(1)
+#         def updateflag():
+#             while True:
+#                 now_hour = time.strftime("%H", time.localtime())
+#                 now_min = time.strftime("%M", time.localtime())
+#                 con = sqlite3.connect("subscribe.db")
+#                 cur = con.cursor()
+#                 if now_hour=='00' and now_min=='00':
+#                     cur.execute("update test set flag=0 where 1=1")
+#                     con.commit()
+#                     time.sleep(3600*23)
+#                 time.sleep(1)
 
         thread.start_new_thread(run, ())
         thread.start_new_thread(jobday, ())
