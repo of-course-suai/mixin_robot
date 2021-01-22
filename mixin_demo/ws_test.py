@@ -81,7 +81,7 @@ def on_message(ws, message):
             if '订阅' == realData:
                 print('调用方法')
                 demo = (str(userId))
-                squrl = cur.execute('select * from shouquan where user_id=?',(demo,)).fetchall()
+                squrl = cur.execute('select * from shouquan where user_id=?',(demo,)).fetchall()  # 这里是查询授权表
                 if len(squrl)==0:
                     introductionContent = '在使用订阅前得先授权嗷，请点击下方按钮进行授权'
                     MIXIN_WS_API.sendUserText(ws, conversationId, userId, introductionContent)
@@ -90,7 +90,7 @@ def on_message(ws, message):
 
                     introductionContent = '订阅成功,现在你可以斗地主了'
                     MIXIN_WS_API.sendUserText(ws, conversationId, userId, introductionContent)
-                    btns = [{"label": "一键直达签到", "action": "https://qqgame.qq.com/game/105.shtml", "color": "#FF8000"}]
+                    btns = [{"label": "一键直达", "action": "https://qqgame.qq.com/game/105.shtml", "color": "#FF8000"}]
                     MIXIN_WS_API.sendAppButtonGroup(ws, conversationId, userId, btns)
                     
                     # 获取用户ID 和 会话ID
