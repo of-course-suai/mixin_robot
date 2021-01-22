@@ -22,7 +22,8 @@ class MainHandler(tornado.web.RequestHandler):
         self.write("授权成功，你可以再次点击订阅即可使用卢本伟每日提醒斗地主")
         res = res.json()
         print(res)
-
+# 授权之后别忘记了把授权的信息存起来
+'''创建一个shouquan表'''
 
 application = tornado.web.Application([
     (r"/auth", MainHandler),
