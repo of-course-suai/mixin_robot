@@ -26,7 +26,7 @@ class MainHandler(tornado.web.RequestHandler):
 '''创建一个shouquan表'''
 
 application = tornado.web.Application([
-    (r"/auth", MainHandler),
+    (r"/", MainHandler),
 ])
 
 if __name__ == "__main__":
