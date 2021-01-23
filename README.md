@@ -17,6 +17,11 @@
  https://www.jianshu.com/p/522e880a4233?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
  
  
+ 如果有兴趣搞go语言的可以看看这篇：
+ 
+ https://github.com/fox-one/mixin-sdk-go
+ 
+ 
 实现环境：
 
  python3.6
